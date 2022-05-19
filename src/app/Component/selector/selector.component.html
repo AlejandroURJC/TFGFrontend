@@ -1,0 +1,24 @@
+<div class ="container" style="text-align:center">
+    <h1>Seleccione el origen y destino del vuelo</h1>
+    <p>
+        <select (click)="onClick()" (change)="onChange($event.target)"  name="miselect" ngModel="seleccionado">
+        <option value="" selected disabled hidden>Seleccione el aeropuerto origen:</option>
+        <option  *ngFor="let item of vuelos" [value]="item">{{item}}</option>
+        </select>
+        
+    </p>
+
+    <p *ngIf="origin_selected !== ''">
+        <select  (change)="onChange2($event.target)" name="miselect2" ngModel="seleccionado2">
+        <option value="" selected disabled hidden>Seleccione el aeropuerto destino:</option>
+        <option  *ngFor="let item of findDestinos(vuelos)" [value]="item">{{item}}</option>
+        </select>
+        
+    </p>
+
+    <button (click)="getRuta()" *ngIf="destino_selected !== ''">Calcular ruta</button>
+
+   
+    
+</div>
+<router-outlet></router-outlet>
