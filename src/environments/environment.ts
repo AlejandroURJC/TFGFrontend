@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:8080/vuelos',
-  datosApi: true
+  datosApi: true,
+  datosCargados : false,
+  grafoCreado : false,
+  criterio: 'duracion'
 };
 
 /*

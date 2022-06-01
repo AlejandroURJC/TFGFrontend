@@ -28,19 +28,12 @@ export class VuelosService {
     return this.http.get<Vuelo[]>(`${this.apiServerUrl}/generateVuelos`);
   }
 
-  public createGraph(): Observable<String[]> {
-    return this.http.get<String[]>(`${this.apiServerUrl}/createGraph`);
+  public createGraph(): Observable<String> {
+    return this.http.get<String>(`${this.apiServerUrl}/createGraph`, {responseType: 'text' as 'json'});
   }
 
-  public deleteGraph(): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/deleteGraph`);
+  public getRutaOptimizada(aeropuertoOrigen: string, aeropuertoDestino: string, criterio : string): Observable<String> {
+    return this.http.get<String>(`${this.apiServerUrl}/${aeropuertoOrigen}/${aeropuertoDestino}/${criterio}`, {responseType: 'text' as 'json'});
   }
 
-  public getRutaOptimizada(aeropuertoOrigen: string, aeropuertoDestino: string): Observable<String> {
-    return this.http.get<String>(`${this.apiServerUrl}/${aeropuertoOrigen}/${aeropuertoDestino}`, {responseType: 'text' as 'json'});
-  }
-
-  public deleteVuelos(): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/deleteAll`);
-  }
 }

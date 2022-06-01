@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { VuelosService } from 'src/app/Service/vuelos.service';
-import { Vuelo } from 'src/app/Model/Vuelo';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-selector',
@@ -11,43 +9,24 @@ import { Vuelo } from 'src/app/Model/Vuelo';
   styleUrls: ['./selector.component.css']
 })
 export class SelectorComponent implements OnInit {
-  public datosApi : boolean;
+  public criterio : string;
+  public grafoCreado : boolean
   public vuelos : Array<String> = [];
   public origin_selected : string = '';
   public destino_selected : string = '';
 
-  constructor(private vuelosService: VuelosService, private http: HttpClient) {
-    this.datosApi = environment.datosApi;
+  constructor(private vuelosService: VuelosService, private router:Router) {
+    this.criterio = environment.criterio;
+    this.grafoCreado = environment.grafoCreado;
    }
 
   ngOnInit(): void {
-    if(this.datosApi){     
-      this.http.get("assets/flights.json").subscribe(data =>{
-        for(let temp of JSON.parse(JSON.stringify(data))){
-          if((temp.flight_status !== "cancelled") && !(temp.departure.airport == null || temp.arrival.airport == null)){
-            let v : Vuelo = {
-              "iataOrigen" : temp.departure.iata,
-              "aeropuertoOrigen" : temp.departure.airport,
-              "iataDestino" : temp.arrival.iata,
-              "aeropuertoDestino" : temp.arrival.airport,
-              "fechaSalida" : temp.departure.estimated,
-              "fechaLlegada" : temp.arrival.estimated
-            };
-            console.log(v);
-              
-            this.vuelosService.addVuelo(v).subscribe(response =>{
-              console.log(response);
-            });                         
-          }
-        }        
-      });
-      
-    }
-    else{
-      this.vuelosService.generateVuelos().subscribe(result =>{
+    if(!this.grafoCreado){
+      this.vuelosService.createGraph().subscribe(result =>{
         console.log(result);
       })
-    }
+      environment.grafoCreado = true;
+    }  
     
   }
 
@@ -62,16 +41,10 @@ export class SelectorComponent implements OnInit {
     return aeropuertos.filter(a => a != this.origin_selected);
   }
 
-  public createGraph() : void{
-    this.vuelosService.createGraph().subscribe(result =>{
-      console.log(result);
-    })
-  }
- 
+  
   public onClick() : void{
     if(this.vuelos.length == 0){
       this.getVuelos(); 
-      this.createGraph();
     } 
   }
 
@@ -91,9 +64,16 @@ export class SelectorComponent implements OnInit {
 
   public getRuta() : void{
     var origin = this.origin_selected.substring(0,this.origin_selected.length - 6);
-    this.vuelosService.getRutaOptimizada(origin, this.destino_selected).subscribe(result =>{
+    this.vuelosService.getRutaOptimizada(origin, this.destino_selected, this.criterio).subscribe(result =>{
       alert(result);
     })
+  }
+
+  public cambiarCriterio() : void{
+    this.origin_selected = '';
+    this.destino_selected = '';
+    this.router.navigate(["api"]);
+
   }
 
   

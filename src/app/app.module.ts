@@ -5,12 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SelectorComponent } from './Component/selector/selector.component';
-
+import { CriterioComponent } from './Component/criterio/criterio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SelectorComponent
+    SelectorComponent,
+    CriterioComponent
   ],
   imports: [
     BrowserModule,
