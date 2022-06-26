@@ -11,13 +11,16 @@ import { Router } from '@angular/router';
 export class SelectorComponent implements OnInit {
   public criterio : string;
   public grafoCreado : boolean
-  public vuelos : Array<String> = [];
-  public origin_selected : string = '';
-  public destino_selected : string = '';
+  public aeropuertos : Array<String>;
+  public origin_selected : string;
+  public destino_selected : string;
 
   constructor(private vuelosService: VuelosService, private router:Router) {
     this.criterio = environment.criterio;
     this.grafoCreado = environment.grafoCreado;
+    this.origin_selected = environment.origin_selected;
+    this.destino_selected = environment.destino_selected;
+    this.aeropuertos = environment.vuelos.split(',');
    }
 
   ngOnInit(): void {
@@ -30,51 +33,76 @@ export class SelectorComponent implements OnInit {
     
   }
 
-  public getVuelos() : void{
+  public getAeropuertos() : void{
     this.vuelosService.getAeropuertos().subscribe(response =>{
       console.log(response);
-      this.vuelos = response;
+      environment.vuelos = response.toString();
+      this.aeropuertos = environment.vuelos.split(',');
+      
     });
   }
 
-  public findDestinos(aeropuertos: any[]): any[]{
-    return aeropuertos.filter(a => a != this.origin_selected);
+  public findAeropuertosValidos(aeropuertos: any[], origenes: boolean): any[]{
+    if(origenes)
+      return aeropuertos.filter(a => a != this.destino_selected);
+    else
+      return aeropuertos.filter(a => a != this.origin_selected);
   }
 
-  
   public onClick() : void{
-    if(this.vuelos.length == 0){
-      this.getVuelos(); 
+    if(this.aeropuertos.length == 1){
+      this.getAeropuertos(); 
     } 
+  }
+
+ 
+  public onChange(texto : any) : void{
+    if(this.destino_selected == texto.value){
+      environment.destino_selected = 'null';
+      this.destino_selected = environment.destino_selected;
+    }
+    environment.origin_selected = texto.value;    
+    this.origin_selected = environment.origin_selected;
+    console.log(this.origin_selected);
+    
+  }
+
+  public onChange2(texto : any) : void{  
+    environment.destino_selected = texto.value;
+    this.destino_selected = environment.destino_selected;
+    console.log(this.destino_selected);
+
   }
 
   /*Debido a que el aeropuerto seleccionado viene acompañado con su código iata, para obtener sólo el nombre del aeropuerto se debe hacer uso de la función substring. Esta nos
     devolverá un nuevo string desde el primer carácter hasta la longitud del texto - 6, tratándose estos 6 carácteres del espacio, del código iata y los paréntesis.
   */
-  public onChange(texto : any) : void{    
-    this.origin_selected = texto.value;
-    console.log(this.origin_selected);
-  }
-
-  public onChange2(texto : any) : void{
-    var value = texto.value; 
-    this.destino_selected = value.substring(0,value.length - 6);;
-    console.log(this.destino_selected);
-  }
-
   public getRuta() : void{
     var origin = this.origin_selected.substring(0,this.origin_selected.length - 6);
-    this.vuelosService.getRutaOptimizada(origin, this.destino_selected, this.criterio).subscribe(result =>{
+    var destiny = this.destino_selected.substring(0,this.destino_selected.length - 6);
+    this.vuelosService.getRutaOptimizada(origin, destiny, this.criterio).subscribe(result =>{
       alert(result);
     })
   }
 
   public cambiarCriterio() : void{
-    this.origin_selected = '';
-    this.destino_selected = '';
-    this.router.navigate(["api"]);
-
+    environment.inicio = true;
+    this.router.navigate(["ini"]);
   }
 
-  
+  public reiniciar() : void{
+    this.origin_selected = 'null';
+    this.destino_selected = 'null';
+    environment.origin_selected = this.origin_selected;
+    environment.destino_selected = this.destino_selected;
+  }
+
+  public flip() : void{
+    var aux = environment.origin_selected;
+    environment.origin_selected = environment.destino_selected;
+    environment.destino_selected = aux;
+    this.origin_selected = environment.origin_selected;
+    this.destino_selected = environment.destino_selected; 
+  }
+ 
 }

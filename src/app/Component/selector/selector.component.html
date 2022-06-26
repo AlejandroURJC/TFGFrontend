@@ -1,26 +1,28 @@
 <div class ="container" style="text-align:center">
     <h1>Seleccione el origen y destino del vuelo</h1>
     <p>
-        <select (click)="onClick()" (change)="onChange($event.target)"  name="miselect" ngModel="seleccionado">
-        <option value="" selected disabled hidden>Seleccione el aeropuerto origen:</option>
-        <option  *ngFor="let item of vuelos" [value]="item">{{item}}</option>
+        <select (click)="onClick()" (change)="onChange($event.target)"  name="item" ngModel="origin_selected">
+        <option  *ngFor="let item of aeropuertos" [value]="item" [selected]="item == origin_selected">{{item}}</option>
+        <option selected disabled hidden *ngIf="origin_selected == 'null' ">Seleccione el aeropuerto origen:</option>
         </select>
         
     </p>
 
-    <p *ngIf="origin_selected !== ''">
-        <select  (change)="onChange2($event.target)" name="miselect2" ngModel="seleccionado2">
-        <option value="" selected disabled hidden>Seleccione el aeropuerto destino:</option>
-        <option  *ngFor="let item of findDestinos(vuelos)" [value]="item">{{item}}</option>
+    <p *ngIf="origin_selected !== 'null'">
+        <select  (change)="onChange2($event.target)" name="item" ngModel="destino_selected">
+        <option  *ngFor="let item of findAeropuertosValidos(aeropuertos, false)" [value]="item" [selected]="item == destino_selected">{{item}}</option>
+        <option selected disabled hidden *ngIf="destino_selected == 'null' ">Seleccione el aeropuerto destino:</option>
         </select>
         
     </p>
 
-    <button (click)="getRuta()" *ngIf="destino_selected !== ''">Calcular ruta</button>
+    <button (click)="getRuta()" [disabled]="(destino_selected == 'null')">Calcular ruta</button>
 
     <button (click)="cambiarCriterio()">Cambiar criterio</button>
 
-   
-    
+    <button (click)="reiniciar()" [disabled]="(origin_selected == 'null') ||  (destino_selected == 'null')">Reiniciar aeropuertos</button>
+
+    <button (click)="flip()" [disabled]="(origin_selected == 'null') ||  (destino_selected == 'null')">Intercambiar</button>
+     
 </div>
 <router-outlet></router-outlet>
