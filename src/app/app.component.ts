@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { VuelosService } from 'src/app/Service/vuelos.service';
 import { Vuelo } from 'src/app/Model/Vuelo';
 
@@ -24,53 +24,45 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.datosCargados){
-      if(this.datosApi){     
-        this.http.get("assets/flights.json").subscribe(data =>{
-          for(let temp of JSON.parse(JSON.stringify(data))){
-            if((temp.flight_status !== "cancelled") && !(temp.departure.airport == null || temp.arrival.airport == null)){
-              let v : Vuelo = {
-                "iataOrigen" : temp.departure.iata,
-                "aeropuertoOrigen" : temp.departure.airport,
-                "iataDestino" : temp.arrival.iata,
-                "aeropuertoDestino" : temp.arrival.airport,
-                "fechaSalida" : temp.departure.estimated,
-                "fechaLlegada" : temp.arrival.estimated
-              };
-              console.log(v);
-                
-              this.vuelosService.addVuelo(v).subscribe(response =>{
-                console.log(response);
-              });                         
-            }
-          }        
-        });
-        
-      }
-      else{
-        this.vuelosService.generateVuelos().subscribe(result =>{
-          console.log(result);
-        })
-      }      
+      //this.cargarDatos();
       environment.datosCargados = true;
     }
   }
 
-  Duracion(){
-    this.inicio = false;
-    environment.criterio = 'duracion';
-    this.router.navigate(["duracion"]);
+  public cargarDatos() : void{
+    if(this.datosApi){     
+      this.http.get<JSON>(`/flightlabs`).subscribe(data =>{
+        for(let temp of JSON.parse(JSON.stringify(data))){
+          if((temp.flight_status !== "cancelled") && !(temp.departure.airport == null || temp.arrival.airport == null)){
+            let v : Vuelo = {
+              "iataOrigen" : temp.departure.iata,
+              "aeropuertoOrigen" : temp.departure.airport,
+              "iataDestino" : temp.arrival.iata,
+              "aeropuertoDestino" : temp.arrival.airport,
+              "fechaSalida" : temp.departure.estimated,
+              "fechaLlegada" : temp.arrival.estimated
+            };
+            console.log(v);
+              
+            this.vuelosService.addVuelo(v).subscribe(response =>{
+              console.log(response);
+            });                         
+          }
+        }  
+      });
+      
+    }
+    else{
+      this.vuelosService.generateVuelos().subscribe(result =>{
+        console.log(result);
+      });
+    }
   }
 
-  Precio(){
+  CriterioSeleccionado(criterio : string){
     this.inicio = false;
-    environment.criterio = 'coste';
-    this.router.navigate(["coste"]);
-  }
-
-  Emisiones(){
-    this.inicio = false;
-    environment.criterio = 'emisiones';
-    this.router.navigate(["emisiones"]);
+    environment.criterio = criterio;
+    this.router.navigate([criterio]);
   }
 
 }

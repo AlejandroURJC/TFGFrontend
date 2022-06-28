@@ -1,9 +1,9 @@
 <div class="container" style="text-align:center" *ngIf="inicio">
   <h1>Bienvenido a nuestra web de vuelos!</h1>
   <h2>Seleccione el criterio con el que desea optimizar su viaje:</h2>
-  <button (click)="Duracion()">Optimizar por duración</button>
-  <button (click)="Precio()" style="margin-left: 10px;">Optimizar por precio</button>
-  <button (click)="Emisiones()" style="margin-left: 10px;">Optimizar por contaminación</button>
+  <button (click)="CriterioSeleccionado('duracion')">Optimizar por duración</button>
+  <button (click)="CriterioSeleccionado('coste')" style="margin-left: 10px;">Optimizar por precio</button>
+  <button (click)="CriterioSeleccionado('emisiones')" style="margin-left: 10px;">Optimizar por contaminación</button>
 </div>
 <router-outlet></router-outlet>
 

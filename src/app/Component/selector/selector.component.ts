@@ -25,9 +25,10 @@ export class SelectorComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.grafoCreado){
+      this.getAeropuertos();
       this.vuelosService.createGraph().subscribe(result =>{
         console.log(result);
-      })
+      })     
       environment.grafoCreado = true;
     }  
     
@@ -42,20 +43,10 @@ export class SelectorComponent implements OnInit {
     });
   }
 
-  public findAeropuertosValidos(aeropuertos: any[], origenes: boolean): any[]{
-    if(origenes)
-      return aeropuertos.filter(a => a != this.destino_selected);
-    else
-      return aeropuertos.filter(a => a != this.origin_selected);
+  public findAeropuertosValidos(aeropuertos: any[]): any[]{
+    return aeropuertos.filter(a => a != this.origin_selected);
   }
 
-  public onClick() : void{
-    if(this.aeropuertos.length == 1){
-      this.getAeropuertos(); 
-    } 
-  }
-
- 
   public onChange(texto : any) : void{
     if(this.destino_selected == texto.value){
       environment.destino_selected = 'null';

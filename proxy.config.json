@@ -1,0 +1,9 @@
+{
+    "/flightlabs": {
+      "target": "https://app.goflightlabs.com/flights?access_key=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiY2I4MGNkOGQ5N2JlZmE5NWVkNmIyNWI5YmExMDVkNDM1ODUzMTUxZTQ2OTM1NmU1YjUzMDgxZjBlNTRjYThkNGJkODk5NjEzNWQzNmVjNWYiLCJpYXQiOjE2NTYzNTQ0ODksIm5iZiI6MTY1NjM1NDQ4OSwiZXhwIjoxNjg3ODkwNDg5LCJzdWIiOiI3MTg0Iiwic2NvcGVzIjpbXX0.kwaSPjoZxthhKbqpz1c4jHvvWhwlxa1zKYHji9TpdrfNxxrFxBn_cEBZhWjvc47nEmhhX9u4CGiQdZYKgRh5HQ",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": { "^/flightlabs": "" }
+    }
+  }
+ 
