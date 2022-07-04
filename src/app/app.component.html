@@ -1,10 +1,24 @@
-<div class="container" style="text-align:center" *ngIf="inicio">
-  <h1>Bienvenido a nuestra web de vuelos!</h1>
-  <h2>Seleccione el criterio con el que desea optimizar su viaje:</h2>
-  <button (click)="CriterioSeleccionado('duracion')">Optimizar por duración</button>
-  <button (click)="CriterioSeleccionado('coste')" style="margin-left: 10px;">Optimizar por precio</button>
-  <button (click)="CriterioSeleccionado('emisiones')" style="margin-left: 10px;">Optimizar por contaminación</button>
+<div class="container bootstrap snippets bootdey" *ngIf="inicio">
+  <div class="row d-flex justify-content-center">
+      <div class="col-md-10 center">
+          <div class="panel panel-default">
+              <div class="panel-heading"> 
+                <h1 class="text-light text-center">
+                  <img src="../assets/logo.png">
+                  <div class="font-controls">
+                    <button *ngIf="!texto_adaptado" type="button" class="font-control btn-dark text-center" (click)="changeFont('+')">A<sup>+</sup></button>
+                    <button *ngIf="texto_adaptado" class="font-control btn-dark" (click)="changeFont('-')">A<sup>-</sup></button>
+                  </div>
+                </h1>                 
+                <h2 class="text-center" style="margin-top: 20px;"><strong>Seleccione el criterio con el que desea optimizar su viaje:</strong></h2>
+              </div>
+              <div class="panel-body text-center" style="margin-top: 20px;">
+                <button type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('duracion')">Optimizar por duración</button>
+                <button type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('coste')" style="margin-left: 10px;">Optimizar por precio</button>
+                <button type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('emisiones')" style="margin-left: 10px;">Optimizar por contaminación</button>                
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 <router-outlet></router-outlet>
-
-

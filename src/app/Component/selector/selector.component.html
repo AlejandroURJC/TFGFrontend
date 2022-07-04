@@ -1,28 +1,67 @@
-<div class ="container" style="text-align:center">
-    <h1>Seleccione el origen y destino del vuelo</h1>
-    <p>
-        <select  (change)="onChange($event.target)"  name="item" ngModel="origin_selected">
-        <option  *ngFor="let item of aeropuertos" [value]="item" [selected]="item == origin_selected">{{item}}</option>
-        <option selected disabled hidden *ngIf="origin_selected === 'null' ">Seleccione el aeropuerto origen:</option>
-        </select>
-        
-    </p>
+<div class="container bootstrap snippets bootdey">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading"> 
+                    <h1 class="text-light text-center">
+                        <img src="../assets/logo.png">
+                        <div class="font-controls">
+                          <button *ngIf="!texto_adaptado" type="button" class="font-control btn-dark text-center" (click)="changeFont('+')">A<sup>+</sup></button>
+                    <button *ngIf="texto_adaptado" class="font-control btn-dark" (click)="changeFont('-')">A<sup>-</sup></button>
+                        </div>
+                      </h1>
+                  <h2 class="text-center" style="margin-top: 20px;"><strong>Seleccione el origen y destino del vuelo:</strong></h2>
+                </div>
+                <div class="panel-body text-center" style="margin-top: 20px;">
+                    <p>
+                        <strong>Aeropuerto origen:</strong>
+                        <select (change)="onChange($event.target)"  name="item" ngModel="origin_selected">
+                            <option *ngFor="let item of aeropuertos" [value]="item" [selected]="item == origin_selected">{{item}}</option>
+                            <option selected disabled hidden *ngIf="origin_selected === 'null' ">Seleccione el aeropuerto origen:</option>
+                        </select>                       
+                    </p>
+                    
+                    <p *ngIf="origin_selected !== 'null'">
+                        <button type="button" class="btn btn-dark" (click)="flip()" [disabled]="(origin_selected === 'null') ||  (destino_selected == 'null')" style="text-align: center;"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+                            </svg>
+                        </button> 
+                        <br>                  
+                        <strong>Aeropuerto destino:</strong> 
+                        <select style="margin-top: 15px;" (change)="onChange2($event.target)" name="item" ngModel="destino_selected">
+                            <option  *ngFor="let item of findAeropuertosValidos(aeropuertos)" [value]="item" [selected]="item == destino_selected">{{item}}</option>
+                            <option selected disabled hidden *ngIf="destino_selected === 'null' ">Seleccione el aeropuerto destino:</option>
+                        </select>                       
+                    </p>
 
-    <p *ngIf="origin_selected !== 'null'">
-        <select  (change)="onChange2($event.target)" name="item" ngModel="destino_selected">
-        <option  *ngFor="let item of findAeropuertosValidos(aeropuertos)" [value]="item" [selected]="item == destino_selected">{{item}}</option>
-        <option selected disabled hidden *ngIf="destino_selected === 'null' ">Seleccione el aeropuerto destino:</option>
-        </select>
-        
-    </p>
+                    <button type="button" class="btn btn-dark btn-lg" (click)="getRuta(content)" [disabled]="(destino_selected === 'null')">
+                        Calcular ruta
+                    </button>
 
-    <button (click)="getRuta()" [disabled]="(destino_selected === 'null')">Calcular ruta</button>
+                    <button type="button" class="btn btn-dark btn-lg" (click)="cambiarCriterio()" style="margin-left: 10px;">
+                        Cambiar criterio                   
+                    </button>
 
-    <button (click)="cambiarCriterio()">Cambiar criterio</button>
+                    <button type="button" class="btn btn-dark btn-lg" (click)="reiniciar()" [disabled]="(origin_selected === 'null') ||  (destino_selected == 'null')" style="margin-left: 10px;">
+                        Reiniciar aeropuertos
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
 
-    <button (click)="reiniciar()" [disabled]="(origin_selected === 'null') ||  (destino_selected == 'null')">Reiniciar aeropuertos</button>
-
-    <button (click)="flip()" [disabled]="(origin_selected === 'null') ||  (destino_selected == 'null')">Intercambiar</button>
-     
-</div>
-<router-outlet></router-outlet>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Ruta calculada</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <p>{{ruta_calculada}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-dark btn-lg" (click)="modal.close('Close click')">Ok</button>
+    </div>
+  </ng-template>

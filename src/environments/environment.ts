@@ -12,7 +12,8 @@ export const environment = {
   criterio: 'duracion',
   origin_selected : 'null',
   destino_selected : 'null',
-  vuelos : ""
+  vuelos : "",
+  texto_adaptado: false
 };
 
 /*

@@ -1,1 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+/* CSS used here will be applied after bootstrap.css*/
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+
+    --font-size: 1.4;
+  
+}
+
+body { 
+    background: url('http://localhost:4200/assets/fondo.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-size: calc(var(--font-size) * 1em);
+}
+   
+.panel-default {
+    opacity: 0.9;
+    margin-top:30px;
+}
+.form-group.last {
+    margin-bottom:0px;
+}
+
+h1 {
+    font-size: calc(var(--font-size) * 1em);
+} 
+
+h2 {
+    font-size: calc(var(--font-size) * 1em);
+} 
+
+.btn {
+    font-size: calc(var(--font-size) * 0.62em);
+} 
+
+.font-controls {
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    display: flex;
+    font-size: 1.4em;
+}
+  
+.font-control {
+    margin-left: .5em;
+    padding: .25em;
+    border: 1px solid #000;
+    cursor: pointer;
+}

@@ -1,16 +1,7 @@
-body,
-html {
-  height: 100%;
+.dark-modal .modal-content {
+  background-color: #1ba9f0;
+  color: white;
 }
-
-.container {
-  /* The image used */
-  background-image: url("../../../assets/fondo.jpg");
-  /* Full height */
-  height: 100%;
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-size: cover;
+.dark-modal .close {
+  color: white;
 }
