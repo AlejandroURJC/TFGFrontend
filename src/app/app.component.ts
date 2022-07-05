@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     if(this.datosApi){ 
       //Datos API guardados en el proyecto: 'assets/flights.json'
       //Datos API en tiempo real: '/flightlabs'    
-      this.http.get<JSON>('assets/flights.json').subscribe(data =>{
+      this.http.get<JSON>('/flightlabs').subscribe(data =>{
         for(let temp of JSON.parse(JSON.stringify(data))){
           if((temp.flight_status !== "cancelled") && !(temp.departure.airport == null || temp.arrival.airport == null)){
             let v : Vuelo = {
