@@ -1,0 +1,6 @@
+projectKey=vuelosapp
+serverUrl=http://192.168.1.40:9005
+serverVersion=9.5.0.56709
+dashboardUrl=http://192.168.1.40:9005/dashboard?id=vuelosapp
+ceTaskId=AYHjut0llmQDFHb-oh0v
+ceTaskUrl=http://192.168.1.40:9005/api/ce/task?id=AYHjut0llmQDFHb-oh0v

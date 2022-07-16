@@ -16,8 +16,8 @@ export class VuelosService {
     return this.http.get<Vuelo[]>(`${this.apiServerUrl}/all`);
   }
 
-  public getAeropuertos(): Observable<String[]> {
-    return this.http.get<String[]>(`${this.apiServerUrl}/distinctAllAeropuertos`);
+  public getAeropuertos(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiServerUrl}/distinctAllAeropuertos`);
   }
 
   public addVuelo(vuelo : Vuelo): Observable<Vuelo> {
@@ -28,12 +28,12 @@ export class VuelosService {
     return this.http.get<Vuelo[]>(`${this.apiServerUrl}/generateVuelos`);
   }
 
-  public createGraph(): Observable<String> {
-    return this.http.get<String>(`${this.apiServerUrl}/createGraph`, {responseType: 'text' as 'json'});
+  public createGraph(): Observable<string> {
+    return this.http.get<string>(`${this.apiServerUrl}/createGraph`, {responseType: 'text' as 'json'});
   }
 
-  public getRutaOptimizada(aeropuertoOrigen: string, aeropuertoDestino: string, criterio : string): Observable<String> {
-    return this.http.get<String>(`${this.apiServerUrl}/${aeropuertoOrigen}/${aeropuertoDestino}/${criterio}`, {responseType: 'text' as 'json'});
+  public getRutaOptimizada(aeropuertoOrigen: string, aeropuertoDestino: string, criterio : string): Observable<string> {
+    return this.http.get<string>(`${this.apiServerUrl}/${aeropuertoOrigen}/${aeropuertoDestino}/${criterio}`, {responseType: 'text' as 'json'});
   }
 
 }

@@ -4,18 +4,18 @@
           <div class="panel panel-default">
               <div class="panel-heading"> 
                 <h1 class="text-light text-center">
-                  <img src="../assets/logo.png">
+                  <img src="../assets/logo.png" alt="FlightRoutes">
                   <div class="font-controls">
-                    <button *ngIf="!texto_adaptado" type="button" class="font-control btn-dark text-center" (click)="changeFont('+')">A<sup>+</sup></button>
-                    <button *ngIf="texto_adaptado" class="font-control btn-dark" (click)="changeFont('-')">A<sup>-</sup></button>
+                    <button id="aumentarTexto" *ngIf="!texto_adaptado" type="button" class="font-control btn-dark" (click)="changeFont('+')">A<sup>+</sup></button>
+                    <button id="disminuirTexto" *ngIf="texto_adaptado" class="font-control btn-dark" (click)="changeFont('-')">A<sup>-</sup></button>
                   </div>
                 </h1>                 
                 <h2 class="text-center" style="margin-top: 20px;"><strong>Seleccione el criterio con el que desea optimizar su viaje:</strong></h2>
               </div>
               <div class="panel-body text-center" style="margin-top: 20px;">
-                <button type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('duracion')">Optimizar por duración</button>
-                <button type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('coste')" style="margin-left: 10px;">Optimizar por precio</button>
-                <button type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('emisiones')" style="margin-left: 10px;">Optimizar por contaminación</button>                
+                <button id="duracion" type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('duracion')">Optimizar por duración</button>
+                <button id="precio" type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('coste')" style="margin-left: 10px;">Optimizar por precio</button>
+                <button id="contaminacion" type="button" class="btn btn-dark btn-lg text-center" (click)="CriterioSeleccionado('emisiones')" style="margin-left: 10px;">Optimizar por contaminación</button>                
               </div>
           </div>
       </div>

@@ -47,20 +47,20 @@ export class AppComponent implements OnInit {
               "fechaSalida" : temp.departure.estimated,
               "fechaLlegada" : temp.arrival.estimated
             };
-            console.log(v);
+            //console.log(v);
               
-            this.vuelosService.addVuelo(v).subscribe(response =>{
-              console.log(response);
-            });                         
+            this.vuelosService.addVuelo(v).subscribe(
+              //console.log(response);
+            );                         
           }
         }  
       });
       
     }
     else{
-      this.vuelosService.generateVuelos().subscribe(result =>{
-        console.log(result);
-      });
+      this.vuelosService.generateVuelos().subscribe(
+        //console.log(result);
+      );
     }
   }
 

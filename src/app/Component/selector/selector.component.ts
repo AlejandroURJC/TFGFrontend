@@ -14,10 +14,10 @@ declare function changeFont(param: string): any;
 export class SelectorComponent implements OnInit {
   public criterio : string;
   public grafoCreado : boolean
-  public aeropuertos : Array<String>;
+  public aeropuertos : Array<string>;
   public origin_selected : string;
   public destino_selected : string;
-  public ruta_calculada : String = '';
+  public ruta_calculada : string = '';
   public texto_adaptado : boolean;
 
   constructor(private vuelosService: VuelosService, private router:Router, private modalService: NgbModal) {
@@ -32,9 +32,9 @@ export class SelectorComponent implements OnInit {
   ngOnInit(): void {
     if(!this.grafoCreado){
       this.getAeropuertos();
-      this.vuelosService.createGraph().subscribe(result =>{
-        console.log(result);
-      })     
+      this.vuelosService.createGraph().subscribe(
+        //console.log(result)  
+      );   
       environment.grafoCreado = true;
     }  
     
@@ -42,7 +42,7 @@ export class SelectorComponent implements OnInit {
 
   public getAeropuertos() : void{
     this.vuelosService.getAeropuertos().subscribe(response =>{
-      console.log(response);
+      //console.log(response);
       environment.vuelos = response.toString();
       this.aeropuertos = environment.vuelos.split(',');
       
@@ -60,14 +60,14 @@ export class SelectorComponent implements OnInit {
     }
     environment.origin_selected = texto.value;    
     this.origin_selected = environment.origin_selected;
-    console.log(this.origin_selected);
+    //console.log(this.origin_selected);
     
   }
 
   public onChange2(texto : any) : void{  
     environment.destino_selected = texto.value;
     this.destino_selected = environment.destino_selected;
-    console.log(this.destino_selected);
+    //console.log(this.destino_selected);
 
   }
 
@@ -75,8 +75,8 @@ export class SelectorComponent implements OnInit {
     devolverá un nuevo string desde el primer carácter hasta la longitud del texto - 6, tratándose estos 6 carácteres del espacio, del código iata y los paréntesis.
   */
   public getRuta(content: any) : void{
-    var origin = this.origin_selected.substring(0,this.origin_selected.length - 6);
-    var destiny = this.destino_selected.substring(0,this.destino_selected.length - 6);
+    let origin = this.origin_selected.substring(0,this.origin_selected.length - 6);
+    let destiny = this.destino_selected.substring(0,this.destino_selected.length - 6);
     this.vuelosService.getRutaOptimizada(origin, destiny, this.criterio).subscribe(result =>{
       this.ruta_calculada = result;
     })
@@ -96,7 +96,7 @@ export class SelectorComponent implements OnInit {
   }
 
   public flip() : void{
-    var aux = environment.origin_selected;
+    let aux = environment.origin_selected;
     environment.origin_selected = environment.destino_selected;
     environment.destino_selected = aux;
     this.origin_selected = environment.origin_selected;
